@@ -4,7 +4,7 @@ const port = 3000
 
 // Incorporate that package into our current project
 const bodyParser = require("body-parser");
-const { urlencoded } = require("body-parser");
+//const { urlencoded } = require("body-parser");
 // get our app use body parser
 // body parser works with express
 // bp has some modes like bp.text or bp.json
@@ -15,6 +15,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", function(req, res){
     res.sendFile(__dirname + "/index.html");
+})
+
+app.get("/bmicalculator", function(req, res){
+    res.sendFile(__dirname + "/bmiCalculator.html");
 })
 
 // till here our server is not accepting post requests
@@ -30,6 +34,13 @@ app.post("/", function(req, res){
     // res.send("Thanks for input.");
     let ans = n1+n2;
     res.send(n1 + " + " + n2 + " = " + ans);
+})
+
+app.post("/bmicalculator", function(req, res){
+    let height = Number(req.body.height);
+    let weight = Number(req.body.weight);
+    let bmi = weight/(height*height);
+    res.send("Your BMI is" + bmi);
 })
 
 app.listen(port, function(){
